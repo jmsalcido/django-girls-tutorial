@@ -13,13 +13,18 @@
             </a>
         </header>
         <section class="post_list">
-            <div id="post-id">
-                <p>published: 22.08.2015, 02:11 PM</p>
-                <h2><a href="#">My second post</a></h2>
-                <p>
-                    This is a small content of the blog
-                </p>
-            </div>
+            {% for post in posts %}
+                {{ post }}
+                <div id="post-id">
+                    <p>published: {{ post.published_date }}</p>
+                    <h2><a href="#">{{ post.title }}</a></h2>
+                    <p>
+                        {{post.text|linebreaks}}
+                    </p>
+                </div>
+            {% endfor %}
+
+            <!-- TEST -->
             <div id="post-id">
                 <p>published: 22.08.2015, 02:11 PM</p>
                 <h2><a href="#">My first post</a></h2>
