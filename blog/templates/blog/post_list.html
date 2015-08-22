@@ -14,20 +14,22 @@
 <body>
     <header>
         <h1>
-            <a href="#">Welcome to Django Girls Blog</a>
+            <a href="/">Welcome to Django Girls Blog</a>
         </h1>
     </header>
 
     <section class="post_list">
         {% for post in posts %}
         <div class="post">
-            <p>published: {{ post.published_date }}</p>
-            <h2><a href="#">{{ post.title }}</a></h2>
+            <div class="date">
+                published: {{ post.published_date }}
+            </div>
+            <h3><a href="#">{{ post.title }}</a></h3>
             <p>
                 {{post.text|linebreaks}}
             </p>
         </div>
-        {% endfor %}
+        <hr> {% endfor %}
     </section>
 </body>
 
