@@ -1,30 +1,34 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Django Girls!</title>
-    </head>
-    <body>
-        <header>
-            <a href="#">
-                <h1>
-                    Welcome to Django Girls Blog
-                </h1>
-            </a>
-        </header>
-        <section class="post_list">
-            {% for post in posts %}
-                <div class="post">
-                    <p>published: {{ post.published_date }}</p>
-                    <h2><a href="#">{{ post.title }}</a></h2>
-                    <p>
-                        {{post.text|linebreaks}}
-                    </p>
-                </div>
-            {% endfor %}
-        </section
-        <footer>
-            Footer :)
-        </footer>
-    </body>
+
+<head>
+    <meta charset="utf-8">
+    <title>Django Girls!</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static  'css/blog.css'%}" media="screen" title="blog-css" charset="utf-8">
+    <link href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <header>
+        <h1>
+            <a href="#">Welcome to Django Girls Blog</a>
+        </h1>
+    </header>
+
+    <section class="post_list">
+        {% for post in posts %}
+        <div class="post">
+            <p>published: {{ post.published_date }}</p>
+            <h2><a href="#">{{ post.title }}</a></h2>
+            <p>
+                {{post.text|linebreaks}}
+            </p>
+        </div>
+        {% endfor %}
+    </section>
+</body>
+
 </html>
