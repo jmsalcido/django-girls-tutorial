@@ -18,32 +18,52 @@ def post_list(request):
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 
-def post_new(request):
-    if not request.user.is_authenticated():
-        return redirect('blog.views.post_list')
-    if request.method == "POST":
-        form = _createForm(request, None)
-        post_id = _savePost(request, form)
-        return redirect('blog.views.post_detail', post_id=post_id)
-    else:
-        form = PostForm()
-    return render(request, 'blog/post_edit.html', {'form': form})
+# def post_new(request):
+#     if not request.user.is_authenticated():
+#         return redirect('blog.views.post_list')
+#     if request.method == "POST":
+#         form = _createForm(request, None)
+#         post_id = _savePost(request, form)
+#         return redirect('blog.views.post_detail', post_id=post_id)
+#     else:
+#         form = PostForm()
+#     return render(request, 'blog/post_edit.html', {'form': form})
 
 
-def post_edit(request, post_id):
+def post_add_edit(request, post_id=None):
+    # redirect user if not logged in.
     if not request.user.is_authenticated():
+        if post_id == None:
+            return redirect('blog.views.post_list')
         return redirect('blog.views.post_detail', post_id=post_id)
+
     post = _getPost(post_id)
     if request.method == "POST":
         form = _createForm(request, post)
-        _savePost(request, form)
+        post_id = _savePost(request, form)
         return redirect('blog.views.post_detail', post_id=post_id)
+
+    if post == None:
+        form = PostForm()
     else:
         form = PostForm(instance=post)
+
     return render(request, 'blog/post_edit.html', {'form': form})
 
 
+def post_delete(request, post_id):
+    user = request.user
+    if not user.is_authenticated():
+        return redirect('blog.views.post_list')
+    if request.method == "GET":
+        post = _getPost(post_id)
+        if user.is_superuser or user == post.author:
+            post.deletePost()
+    return redirect('blog.views.post_list')
+
 def _getPost(post_id):
+    if post_id == None:
+        return None
     return get_object_or_404(Post, pk=post_id)
 
 
