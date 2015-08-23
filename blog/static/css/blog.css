@@ -45,9 +45,18 @@ section {
 .post h3 a, .post h3 a:visited {
     color: #000000;
 }
+
+/* FORM */
+
 .save {
     float: right;
 }
 .post-form textarea, .post-form input {
     width: 100%;
+}
+.post-form fieldset {
+    display: inline
+}
+.post-form fieldset input[type="checkbox"] {
+    width: 30px;
 }

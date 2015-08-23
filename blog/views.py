@@ -1,7 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Post
 from .forms import PostForm
+import pdb
+
 
 # Create your views here.
 
@@ -18,5 +20,15 @@ def post_list(request):
 
 
 def post_new(request):
-    form = PostForm()
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            if request.POST.get('publish', 'off') == 'on':
+                post.published_date = timezone.now()
+            post.save()
+            return redirect('blog.views.post_detail', post_id=post.pk)
+    else:
+        form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
