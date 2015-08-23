@@ -8,7 +8,7 @@ import pdb
 
 
 def post_detail(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
+    post = _getPost(post_id)
     return render(request, 'blog/post_detail.html', {'post': post})
 
 
@@ -30,15 +30,17 @@ def post_new(request):
 def post_edit(request, post_id):
     if not request.user.is_authenticated():
         return redirect('blog.views.post_detail', post_id=post_id)
+    post = _getPost(post_id)
     if request.method == "POST":
         form = _createForm(request, post)
-        pdb.set_trace()
         _savePost(request, form)
         return redirect('blog.views.post_detail', post_id=post.pk)
     else :
         form = PostForm(instance=post)
-        pdb.set_trace()
     return render(request, 'blog/post_edit.html', {'form': form})
+
+def _getPost(post_id):
+    return get_object_or_404(Post, pk=post_id)
 
 def _createForm(request, post):
     if not post == None:
