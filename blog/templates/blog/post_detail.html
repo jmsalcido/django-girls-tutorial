@@ -2,11 +2,14 @@
 {% block content %}
 <section class="post_detail">
     <div class="post">
-        {% if post.published_date %}
         <div class="date">
+        {% if post.published_date %}
             {{ post.published_date }}
-        </div>
         {% endif %}
+        {% if user.is_authenticated %}
+            <a class="btn btn-default" href="{% url "post_edit" post_id=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        {% endif %}
+        </div>
         <h1>{{ post.title }}</h1>
         <p>{{ post.text|linebreaks }}</p>
     </div>

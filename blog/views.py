@@ -4,7 +4,6 @@ from .models import Post
 from .forms import PostForm
 import pdb
 
-
 # Create your views here.
 
 
@@ -21,14 +20,37 @@ def post_list(request):
 
 def post_new(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            if request.POST.get('publish', 'off') == 'on':
-                post.published_date = timezone.now()
-            post.save()
-            return redirect('blog.views.post_detail', post_id=post.pk)
+        form = _createForm(request, None)
+        _savePost(request, form)
+        return redirect('blog.views.post_detail', post_id=post.pk)
     else:
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
+
+def post_edit(request, post_id):
+    if not request.user.is_authenticated():
+        return redirect('blog.views.post_detail', post_id=post_id)
+    if request.method == "POST":
+        form = _createForm(request, post)
+        pdb.set_trace()
+        _savePost(request, form)
+        return redirect('blog.views.post_detail', post_id=post.pk)
+    else :
+        form = PostForm(instance=post)
+        pdb.set_trace()
+    return render(request, 'blog/post_edit.html', {'form': form})
+
+def _createForm(request, post):
+    if not post == None:
+        return PostForm(request.POST, instance=post)
+    else:
+        return PostForm(request.POST)
+
+def _savePost(request, form):
+    if not form == None and form.is_valid():
+        post = form.save(commit=False)
+        post.author = request.user
+        if request.POST.get('published_date', 'off') == 'on':
+            post.publish()
+        else:
+            post.unpublish()

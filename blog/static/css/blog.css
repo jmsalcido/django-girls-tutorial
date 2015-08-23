@@ -25,7 +25,7 @@ section {
     margin-left: 100px;
     margin-right: 100px;
 }
-.author {
+.author, .date {
     float: right;
     color: #828282;
 }

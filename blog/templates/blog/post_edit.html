@@ -6,10 +6,13 @@
         When posting, please try to be a good person and think about what you are writing, dont-be-an-asshole.
     </p>
     <h1>New post</h1>
-    <form method="POST" class="post-form">{% csrf_token %} {{ form.as_p }}
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <!-- Ok. -->
         <fieldset>
             <div class="publish">
-                <input id="publish" type="checkbox" name="publish"><label for="publish">Publish post?</label>
+                <input id="publish" type="checkbox" name="published_date"><label for="publish">Publish post?</label>
             </div>
         </fieldset>
         <button type="submit" class="save btn btn-default">Save</button>
