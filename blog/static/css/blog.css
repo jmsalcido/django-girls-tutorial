@@ -1,10 +1,13 @@
-header h1 {
+h1, h2, h3, h4 {
     font-family: 'Lobster', cursive;
-    background-color: black;
-    margin: 0;
-    padding: 20px 20px 20px 40px;
 }
-h1 a {
+header {
+    background-color: black;
+    padding: 20px 20px 20px 40px;
+    margin: 0;
+}
+header h1 a {
+    font-size: 36pt;
     color: #fca205;
 }
 h1 a:hover {
@@ -16,17 +19,26 @@ section {
     margin-left: 100px;
     margin-right: 100px;
 }
-.date {
+.author {
     float: right;
     color: #828282;
+}
+.author p {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 .post {
     padding-bottom: 15px;
 }
 .post h3 a, .post h3 a:visited {
-    font-family: 'Lobster', cursive;
     color: #000000;
 }
 .post_list {
     margin-top: 50px;
+}
+.save {
+    float: right;
+}
+.post-form textarea, .post-form input {
+    width: 100%;
 }
