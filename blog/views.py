@@ -19,38 +19,28 @@ def post_list(request):
 
 
 def post_new(request):
-    redirect = _redirectAnon(request)
-    if not redirect == None:
-        return redirect
+    if not request.user.is_authenticated():
+        return redirect('blog.views.post_list')
     if request.method == "POST":
         form = _createForm(request, None)
-        _savePost(request, form)
-        return redirect('blog.views.post_detail', post_id=post.pk)
+        post_id = _savePost(request, form)
+        return redirect('blog.views.post_detail', post_id=post_id)
     else:
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
 
 
 def post_edit(request, post_id):
-    redirect = _redirectAnon(request, post_id)
-    if not redirect == None:
-        return redirect
+    if not request.user.is_authenticated():
+        return redirect('blog.views.post_detail', post_id=post_id)
     post = _getPost(post_id)
     if request.method == "POST":
         form = _createForm(request, post)
         _savePost(request, form)
-        return redirect('blog.views.post_detail', post_id=post.pk)
+        return redirect('blog.views.post_detail', post_id=post_id)
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
-
-
-def _redirectAnon(request, post_id=None):
-    if post_id == None and not request.user.is_authenticated():
-        return redirect('blog.views.post_list')
-    if not request.user.is_authenticated():
-        return redirect('blog.views.post_detail', post_id=post_id)
-    return None
 
 
 def _getPost(post_id):
@@ -72,3 +62,4 @@ def _savePost(request, form):
             post.publish()
         else:
             post.unpublish()
+        return post.pk
