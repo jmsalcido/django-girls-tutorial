@@ -27,14 +27,17 @@ section {
     margin-top: 0;
     margin-bottom: 0;
 }
-.post {
+.post_list {
+    margin-top: 50px;
+}
+.post_list .post {
     padding-bottom: 15px;
+}
+.post_detail .post {
+    padding-bottom: 50px;
 }
 .post h3 a, .post h3 a:visited {
     color: #000000;
-}
-.post_list {
-    margin-top: 50px;
 }
 .save {
     float: right;

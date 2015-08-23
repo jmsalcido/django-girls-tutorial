@@ -1,13 +1,37 @@
 {% extends "blog/base.html" %}
-
 {% block content %}
-    <section class="post">
+<section class="post_detail">
+    <div class="post">
         {% if post.published_date %}
-            <div class="date">
-                {{ post.published_date }}
-            </div>
+        <div class="date">
+            {{ post.published_date }}
+        </div>
         {% endif %}
         <h1>{{ post.title }}</h1>
         <p>{{ post.text|linebreaks }}</p>
-    </section>
+    </div>
+    <hr>
+</section>
+
+<section class="author_details">
+    {{ post.author.username }} is author of this.
+</section>
+
+<section class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES * * */
+        var disqus_shortname = 'djangogirlsjmsalcido';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</section>
 {% endblock %}
