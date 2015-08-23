@@ -10,6 +10,12 @@ header h1 a {
     font-size: 36pt;
     color: #fca205;
 }
+.top-menu, .top-menu:hover, .top-menu:visited {
+    color: #ffffff;
+    float: right;
+    font-size: 26pt;
+    margin-right: 20px;
+}
 h1 a:hover {
     color: #fca205;
     text-decoration: none;
